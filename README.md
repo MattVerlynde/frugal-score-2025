@@ -1,0 +1,1 @@
+# frugal-score-2025
