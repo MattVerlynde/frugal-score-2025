@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+#
+# This script is a python executable computing a change detection algorithm on time series of SAR images.
+# Usage: python clustering_blob.py --storage_path [PATH_TO_FOLDER_TO_STORE_RESULTS] --data_seed [SEED] --random_seed [SEED] --n_clusters [NUMBER_OF_CLUSTERS] --model [CLUSTERING_METHOD] --repeat [NUMBER_OF_MODEL_RUNS] --number_run/-n [NUMBER_OF_RUNS]
+#
+# Author: Matthieu Verlynde
+# Email: matthieu.verlynde@univ-smb.fr
+# Date: 26 Feb 2025
+# Version: 1.0.0
+
 import os
 import argparse
 import subprocess

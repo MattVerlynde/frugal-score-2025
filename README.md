@@ -61,6 +61,24 @@ This repository contains the code associated to the paper *Scoring Frugality for
         └── simulation_metrics_exec.sh
 ```
 
+## Installation
+
+### Data download
+
+Data description and download link are available on this [https://bigearth.net/v1.0.html](link).
+
+**Warning:** ~66GB are required to store the data
+
+### Dependencies
+
+python 3.11.8, codecarbon 2.3.4, numpy 1.26.4, pandas 2.2.1, scikit-learn 1.4.1
+```bash
+conda env create -f environment.yml
+conda activate frugal-score
+```
+
+[a relative link](path%20with%20spaces/other_file.md)
+
 ## Data
 
 This repository presents the code for frugality evaluation for two remote sensing data processing tasks : clustering and change detection.
@@ -73,6 +91,36 @@ The change detection task was carried out on multiband PolSAR image time series 
 
 ![Scene1_t0](./doc/static/Scene_1small.png)
 ![Scene1_ground_truth](./doc/static/Scene_1small_truth.png)
+
+## Usage
+
+| File | Associated command | Description |
+| ---- | ------------------ | ----------- |
+| [change-detection.py](src/performance-tracking/experiments/conso_change/change-detection.py)  | `python change-detection.py --storage_path [PATH_TO_FOLDER_TO_STORE_RESULTS] --image [PATH_TO_FOLDER_WITH_IMAGES] --window [WINDOW_SIZE] --cores [NUMBER_OF_CORES_USED] --number_run [NUMBER_OF_RUNS] --robust [ROBUSTNESS ID]` | Runs change detection algorithms on UAVSAR data |
+| [clustering_blob.py](src/performance-tracking/experiments/conso_clustering/clustering_blob.py)  | `python clustering_blob.py --storage_path [PATH_TO_FOLDER_TO_STORE_RESULTS] --data_seed [SEED] --random_seed [SEED] --n_clusters [NUMBER_OF_CLUSTERS] --model [CLUSTERING_METHOD] --repeat [NUMBER_OF_MODEL_RUNS] --number_run/-n [NUMBER_OF_RUNS]` | Runs clustering algorithms on toy data |
+
+<!--
+To **create the TFRecord files** containing the data and used in the training file, use the file `prep_splits.py` made by G. Sumbul et al. [[1]](#1)
+```bash
+prep_splits.py [-h] [-r ROOT_FOLDER] [-o OUT_FOLDER] [-n PATCH_NAMES [PATCH_NAMES ...]]
+```
+
+To **create balanced splits** to create the TFRecord files, use the file `stratified_split.py`. 
+**Warning:** each splits created will be the same size ! 
+```bash
+stratified_split.py [-h] [-d DATA_FILE] [-k NUMBER OF SPLITS] [-o OUTPUT_FOLDER] [-r ROOT_FOLDER] [-tf]
+```
+
+To **train your model** using the the TFRecord files, use the file `train.py`.
+```bash
+train.py [-h] [--sets JSON_PATH_WITH_TFRECORD_PATHS] [--epochs NUMBER_OF_EPOCHS] [--optim OPTIIMIZER_USED] [--lr FLOAT_LEARNING_RATE] [--loss LOSS_FUNCTION] [--batch BATCH_SIZE] [--finetune FINETUNING_LEVEL] [--seed RANDOM_SEED] [--storage_path EVENT_STORAGE_PATH] [--count] [--rgb]
+```
+
+To **plot your results** after training using the training event file created, use the file `read_event.py`.
+```bash
+src/read_event.py [-h] [--storage_path EVENT_STORAGE_PATH]
+```
+-->
 
 ## Authors
 
