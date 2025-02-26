@@ -1,15 +1,22 @@
 # Scoring Frugality for Remote Sensing Data Processing Algorithms
 
-This repository 
+This repository contains the code associated to the paper *Scoring Frugality for Remote Sensing Data Processing Algorithms* to carry out frugality analysis on clustering and change detection tasks.
+
+> Assessing the frugality of data processing algorithms has become a priority in the machine learning and artificial intelligence community, and the use of extensive data processing algorithms increases exponentially for remote sensing applications. However, identifying a quantifiable measure of this dimension combining performance and energy consumption is a complex task. This paper proposes both a methodology to collect energy consumption data and the use of three different frugality scoring methods. Through a case study of two classical data processing tasks in remote sensing, change detection and clustering, we show that these three scores encompass different aspects of frugality altogether and suggest a combined approach by users.
+
+**WORK IN PROGRESS**
+
+## Repository structure
 
 ```bash
-
 .
 ├── data
-│   ├── ...
+│   └── ...
 ├── doc
 │   ├── static
-│   └── 
+│   │   ├── Scene_1small.png
+│   │   └── Scene_1small_truth.png
+│   └── submit_EUSIPCO_2025.pdf
 ├── LICENCE
 ├── README.md
 └── src
@@ -31,24 +38,11 @@ This repository
         │   │   ├── get_perf.py
         │   │   ├── helpers
         │   │   │   └── multivariate_images_tool.py
-        │   │   ├── main.py
-        │   │   ├── param_change_glrt_2images.yaml
-        │   │   ├── param_change_interm.yaml
-        │   │   ├── param_change_logdiff_2images.yaml
-        │   │   ├── param_change_robust_2images.yaml
-        │   │   ├── param_change_robust_test.yaml
-        │   │   ├── param_change_robust.yaml
-        │   │   └── param_change.yaml
+        │   │   └── main.py
         │   ├── conso_classif_deep
         │   │   ├── classif_deep.py
         │   │   ├── get_perf.py
         │   │   ├── get_scores.py
-        │   │   ├── param_classif_deep_Inception.yaml
-        │   │   ├── param_classif_deep_SCNN_10.yaml
-        │   │   ├── param_classif_deep_SCNN_strat.yaml
-        │   │   ├── param_classif_deep_SCNN.yaml
-        │   │   ├── param_classif_deep_test.yaml
-        │   │   ├── param_classif_deep.yaml
         │   │   ├── read_event.py
         │   │   ├── read_events.py
         │   │   └── simulation_metrics_exec.sh
@@ -59,10 +53,6 @@ This repository
         │       ├── get_perf.py
         │       ├── helpers
         │       │   └── processing_helpers.py
-        │       ├── param_clustering_blob.yaml
-        │       ├── param_clustering_interm.yaml
-        │       ├── param_clustering_test.yaml
-        │       ├── param_clustering.yaml
         │       ├── plot_clustering.py
         │       ├── utils_clustering_blob.py
         │       └── utils_clustering.py
@@ -70,3 +60,26 @@ This repository
         ├── README.md
         └── simulation_metrics_exec.sh
 ```
+
+## Data
+
+This repository presents the code for frugality evaluation for two remote sensing data processing tasks : clustering and change detection.
+
+The clustering task was carried out on a toy dataset containing 1000 instances divided in 5 blobs on 5 features wuth a standard variation of 5. Its projection over the first 3 dimensions of the PCA is presented following
+
+![toy_dataset](./doc/static/toy_dataset.png)
+
+The change detection task was carried out on multiband PolSAR image time series from the UAVSAR (Courtesy NASA/JPL-Caltech) [[1]](#1) with ground truth data from [[2]](#2).
+
+![Scene1_t0](./doc/static/Scene_1small.png)
+![Scene1_ground_truth](./doc/static/Scene_1small_truth.png)
+
+## Authors
+
+* [Matthieu Verlynde](https://github.com/MattVerlynde) ([matthieu.verlynde@univ-smb.fr](mailto:matthieu.verlynde@univ-smb.fr))
+* [Ammar Mian](https://ammarmian.github.io/) ([ammar.mian@univ-smb.fr](mailto:ammar.mian@univ-smb.fr))
+* [Yajing Yan](https://www.univ-smb.fr/listic/en/presentation_listic/membres/enseignants-chercheurs/yajing-yan-fr/) ([yajing.yan@univ-smb.fr](mailto:yajing.yan@univ-smb.fr))
+
+## References
+>  <a id="1">[1]</a>  A. Mian, G. Ginolhac, J.-P. Ovarlez, and A. M. Atto, “New Robust Statistics for Change Detection in Time Series of Multivariate SAR Images,” IEEE Transactions on Signal Processing, vol. 67, no. 2, pp. 520–534, Jan. 2019. [Online]. Available: https://ieeexplore.ieee.org/ document/8552453/<br>
+>  <a id="2">[2]</a>  A. D. C. Nascimento, A. C. Frery, and R. J. Cintra, “Detecting changes in fully polarimetric sar imagery with statistical information theory,” IEEE Transactions on Geoscience and Remote Sensing, vol. 57, no. 3, pp. 1380–1392, 2019.
