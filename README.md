@@ -77,8 +77,6 @@ conda env create -f environment.yml
 conda activate frugal-score
 ```
 
-[a relative link](path%20with%20spaces/other_file.md)
-
 ## Data
 
 This repository presents the code for frugality evaluation for two remote sensing data processing tasks : clustering and change detection.
