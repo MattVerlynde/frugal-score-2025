@@ -94,29 +94,6 @@ The change detection task was carried out on multiband PolSAR image time series 
 | [plot_change_detection.py](src/plot_change_detection.py)  | `python plot_change_detection.py --result_path [PATH_TO_RESULTS] --output_path [OUTPUT_PATH]` | Plot score results for change detection |
 | [plot_clustering.py](src/plot_clustering.py)  | `python plot_clustering.py --result_path [PATH_TO_RESULTS] --output_path [OUTPUT_PATH]` | Plot score results for clustering |
 
-<!--
-To **create the TFRecord files** containing the data and used in the training file, use the file `prep_splits.py` made by G. Sumbul et al. [[1]](#1)
-```bash
-prep_splits.py [-h] [-r ROOT_FOLDER] [-o OUT_FOLDER] [-n PATCH_NAMES [PATCH_NAMES ...]]
-```
-
-To **create balanced splits** to create the TFRecord files, use the file `stratified_split.py`. 
-**Warning:** each splits created will be the same size ! 
-```bash
-stratified_split.py [-h] [-d DATA_FILE] [-k NUMBER OF SPLITS] [-o OUTPUT_FOLDER] [-r ROOT_FOLDER] [-tf]
-```
-
-To **train your model** using the the TFRecord files, use the file `train.py`.
-```bash
-train.py [-h] [--sets JSON_PATH_WITH_TFRECORD_PATHS] [--epochs NUMBER_OF_EPOCHS] [--optim OPTIIMIZER_USED] [--lr FLOAT_LEARNING_RATE] [--loss LOSS_FUNCTION] [--batch BATCH_SIZE] [--finetune FINETUNING_LEVEL] [--seed RANDOM_SEED] [--storage_path EVENT_STORAGE_PATH] [--count] [--rgb]
-```
-
-To **plot your results** after training using the training event file created, use the file `read_event.py`.
-```bash
-src/read_event.py [-h] [--storage_path EVENT_STORAGE_PATH]
-```
--->
-
 ## Authors
 
 * [Matthieu Verlynde](https://github.com/MattVerlynde) ([matthieu.verlynde@univ-smb.fr](mailto:matthieu.verlynde@univ-smb.fr))
