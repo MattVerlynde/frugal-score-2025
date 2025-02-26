@@ -91,6 +91,8 @@ The change detection task was carried out on multiband PolSAR image time series 
 | ---- | ------------------ | ----------- |
 | [change-detection.py](src/performance-tracking/experiments/conso_change/change-detection.py)  | `python change-detection.py --storage_path [PATH_TO_FOLDER_TO_STORE_RESULTS] --image [PATH_TO_FOLDER_WITH_IMAGES] --window [WINDOW_SIZE] --cores [NUMBER_OF_CORES_USED] --number_run [NUMBER_OF_RUNS] --robust [ROBUSTNESS ID]` | Runs change detection algorithms on UAVSAR data |
 | [clustering_blob.py](src/performance-tracking/experiments/conso_clustering/clustering_blob.py)  | `python clustering_blob.py --storage_path [PATH_TO_FOLDER_TO_STORE_RESULTS] --data_seed [SEED] --random_seed [SEED] --n_clusters [NUMBER_OF_CLUSTERS] --model [CLUSTERING_METHOD] --repeat [NUMBER_OF_MODEL_RUNS] --number_run/-n [NUMBER_OF_RUNS]` | Runs clustering algorithms on toy data |
+| [plot_change_detection.py](src/plot_change_detection.py)  | `python plot_change_detection.py --result_path [PATH_TO_RESULTS] --output_path [OUTPUT_PATH]` | Plot score results for change detection |
+| [plot_clustering.py](src/plot_clustering.py)  | `python plot_clustering.py --result_path [PATH_TO_RESULTS] --output_path [OUTPUT_PATH]` | Plot score results for clustering |
 
 <!--
 To **create the TFRecord files** containing the data and used in the training file, use the file `prep_splits.py` made by G. Sumbul et al. [[1]](#1)
