@@ -17,6 +17,7 @@ This repository contains the code associated to the paper *Scoring Frugality for
 │   │   ├── Scene_1small.png
 │   │   └── Scene_1small_truth.png
 │   └── submit_EUSIPCO_2025.pdf
+├── environment.yml
 ├── LICENCE
 ├── README.md
 └── src
@@ -121,5 +122,5 @@ src/read_event.py [-h] [--storage_path EVENT_STORAGE_PATH]
 * [Yajing Yan](https://www.univ-smb.fr/listic/en/presentation_listic/membres/enseignants-chercheurs/yajing-yan-fr/) ([yajing.yan@univ-smb.fr](mailto:yajing.yan@univ-smb.fr))
 
 ## References
->  <a id="1">[1]</a>  A. Mian, G. Ginolhac, J.-P. Ovarlez, and A. M. Atto, “New Robust Statistics for Change Detection in Time Series of Multivariate SAR Images,” IEEE Transactions on Signal Processing, vol. 67, no. 2, pp. 520–534, Jan. 2019. [Online]. Available: https://ieeexplore.ieee.org/ document/8552453/<br>
+>  <a id="1">[1]</a>  A. Mian, G. Ginolhac, J.-P. Ovarlez, and A. M. Atto, “New Robust Statistics for Change Detection in Time Series of Multivariate SAR Images,” IEEE Transactions on Signal Processing, vol. 67, no. 2, pp. 520–534, Jan. 2019. [Online]. Available: https://ieeexplore.ieee.org/document/8552453/<br>
 >  <a id="2">[2]</a>  A. D. C. Nascimento, A. C. Frery, and R. J. Cintra, “Detecting changes in fully polarimetric sar imagery with statistical information theory,” IEEE Transactions on Geoscience and Remote Sensing, vol. 57, no. 3, pp. 1380–1392, 2019.
