@@ -63,12 +63,6 @@ This repository contains the code associated to the paper *Scoring Frugality for
 
 ## Installation
 
-### Data download
-
-Data description and download link are available on this [https://bigearth.net/v1.0.html](link).
-
-**Warning:** ~66GB are required to store the data
-
 ### Dependencies
 
 python 3.11.8, codecarbon 2.3.4, numpy 1.26.4, pandas 2.2.1, scikit-learn 1.4.1
