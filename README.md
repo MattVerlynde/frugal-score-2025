@@ -1,6 +1,6 @@
 # Scoring Frugality for Remote Sensing Data Processing Algorithms
 
-This repository contains the code associated to the paper *Scoring Frugality for Remote Sensing Data Processing Algorithms* to carry out frugality analysis on clustering and change detection tasks.
+This repository contains the code associated to the paper [*Scoring Frugality for Remote Sensing Data Processing Algorithms*](doc/submit_EUSIPCO_2025.pdf) to carry out frugality analysis on clustering and change detection tasks.
 
 > Assessing the frugality of data processing algorithms has become a priority in the machine learning and artificial intelligence community, and the use of extensive data processing algorithms increases exponentially for remote sensing applications. However, identifying a quantifiable measure of this dimension combining performance and energy consumption is a complex task. This paper proposes both a methodology to collect energy consumption data and the use of three different frugality scoring methods. Through a case study of two classical data processing tasks in remote sensing, change detection and clustering, we show that these three scores encompass different aspects of frugality altogether and suggest a combined approach by users.
 
