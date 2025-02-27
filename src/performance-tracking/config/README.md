@@ -1,28 +1,28 @@
 # Configuration for energy consumption tracking
 
-Cette page résume la procédure d'installation du pipeline de lecture, écriture, sauvegarde et visualisation des données internes du hardware. Celle-ci est basée sur le pipeline **Telegraf-InfluxDB-Grafana** (TIG). Elle s'inspire largement sur le tutoriel accessible en ligne à [https://domopi.eu/tig-le-trio-telegraf-influxdb-grafana-pour-surveiller-vos-equipements/](https://domopi.eu/tig-le-trio-telegraf-influxdb-grafana-pour-surveiller-vos-equipements/).
-Cette page présente également la procédure d'interrogation de la base de données **InfluxDB** après exécution d'un programme python, via l'exécution d'un script bash.
+This page summaries the installation procedure for the reading, writieng, storing and visualizing pipeline for internal hardware usage data. This work is based on the **Telegraf-InfluxDB-Grafana** pipeline (TIG). It is largely inspired by the tutorial available online at [https://domopi.eu/tig-le-trio-telegraf-influxdb-grafana-pour-surveiller-vos-equipements/](https://domopi.eu/tig-le-trio-telegraf-influxdb-grafana-pour-surveiller-vos-equipements/).
+This guide also presents the interrogation procedure of the **InfluxDB** database after the execution of a python scriptusing a bash script.
 
 <!--more-->
 
-## Présentation du pipeline
+## Pipeline presentation
 
 
-Le plugin Telegraf, produit par InfluxDB permet la collection des données du hardware de l'ordinateur en temps réel, ainsi que son formatage. Le plugin ZWave-JS UI collecte les données de la prise connectée, et les transfère à Telegraf via un plugin Mosquitto.
-InfluxDB permet le stockage de ces données en séries temporelles, et constitue la base de donnée qui est interrogée au sein du pipeleine; Grafana est un outil de visualisation et d'analyse des données lues la base de données de InfluxDB.
+The Telegraf plugin, produced by InfluxDB, allows the live collection of hardware usage data and their formatting. The ZWave-JS UI plugin collects data from a connected plug, and transfers them to Telegraf using the Mosquitto plugin.
+InfluxDB stores the data in time series format, and forms the interrogated database within the pipeline; Grafana is a visualisation data anlysis tool used with the InfluxDB database.
 
-## Téléchargement de TIG
+## Installation
 
-> Ce tutoriel se concentre sur l'installation de pipeline via docker, et nécessite donc son installation préalable.
+> This tutorial focuses on the pipeline installation using Docker, and depend on its previous installation.
 
-Commençons par télécharger les images docker de trois plugins constituant le pipeline.
+We start by downloading the Docker images of the three plugins within the pipeline.
 
 ```shell
 docker pull telegraf
 docker pull influxdb
 docker pull grafana/grafana-oss
 ```
-Nous allons utiliser la commande `docker compose` afin de réaliser notre pipeline. Construisons alors le fichier de construction `docker-compose.yml`. Configurons le port d'entrée de Grafana selon notre choix. Dans cet exemple, nous avons choisi le port `9090`.
+We will use the `docker compose` command to build our pipeline. We use a building file `docker-compose.yml` after choosing a Grafana entering port. For this example, we choose the port `9090`.
 
 ```yaml
 version: "3.8"
@@ -35,9 +35,9 @@ services:
       - 8086:8086
     hostname: influxdb
     environment:
-      INFLUX_DB: $INFLUX_DB  # nom de la base de données créée à l'initialisation d'InfluxDB
-      INFLUXDB_USER: $INFLUXDB_USER  # nom de l'utilisateur pour gérer cette base de données
-      INFLUXDB_USER_PASSWORD: $INFLUXDB_USER_PASSWORD  # mot de passe de l'utilisateur pour gérer cette base de données
+      INFLUX_DB: $INFLUX_DB  # database name
+      INFLUXDB_USER: $INFLUXDB_USER  # user name
+      INFLUXDB_USER_PASSWORD: $INFLUXDB_USER_PASSWORD  # user password
       DOCKER_INFLUXDB_INIT_MODE: $DOCKER_INFLUXDB_INIT_MODE
       DOCKER_INFLUXDB_INIT_USERNAME: $DOCKER_INFLUXDB_INIT_USERNAME
       DOCKER_INFLUXDB_INIT_PASSWORD: $DOCKER_INFLUXDB_INIT_PASSWORD
@@ -46,30 +46,30 @@ services:
       DOCKER_INFLUXDB_INIT_RETENTION: $DOCKER_INFLUXDB_INIT_RETENTION
       DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: $DOCKER_INFLUXDB_INIT_ADMIN_TOKEN
     volumes:
-      - ./influxdb:/var/lib/influxdb  # volume pour stocker la base de données InfluxDB
+      - ./influxdb:/var/lib/influxdb  # volume to store the InfluxDB database
 
   telegraf:
     image: telegraf
     depends_on:
-      - influxdb  # indique que le service influxdb est nécessaire
+      - influxdb  # indicate that influxdb is necessary
     container_name: telegraf
     restart: always
     links:
       - influxdb:influxdb
     tty: true
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock  # nécessaire pour remonter les données du démon Docker
-      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf  # fichier de configuration de Telegraf
-      - /:/host:ro # nécessaire pour remonter les données de l'host (processes, threads...)
+      - /var/run/docker.sock:/var/run/docker.sock  # necessary to fetch data from the Docker daemon
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf  # configuration file for Telegraf
+      - /:/host:ro # necessary to fetch data from host (processes, threads...)
 
   grafana:
     image: grafana/grafana-oss
     depends_on:
-      - influxdb  # indique que le service influxdb est nécessaire
+      - influxdb  # indicate that influxdb is necessary
     container_name: grafana
     restart: always
     ports:
-      - 9090:3000  # port pour accéder à l'interface web de Grafana
+      - 9090:3000  # port to access the web interface of Grafana
     links:
       - influxdb:influxdb
     environment:
@@ -79,16 +79,15 @@ services:
                           grafana-piechart-panel,\
                           grafana-simple-json-datasource,\
                           grafana-worldmap-panel"
-      GF_SECURITY_ADMIN_USER: $GF_SECURITY_ADMIN_USER  # nom de l'utilisateur créé par défaut pour accéder à Grafana
-      GF_SECURITY_ADMIN_PASSWORD: $GF_SECURITY_ADMIN_PASSWORD  # mot de passe de l'utilisateur créé par défaut pour accéder à Grafana
+      GF_SECURITY_ADMIN_USER: $GF_SECURITY_ADMIN_USER  # user name for Grafana
+      GF_SECURITY_ADMIN_PASSWORD: $GF_SECURITY_ADMIN_PASSWORD  # user password for Grafana
     volumes:
       - ./grafana:/var/lib/grafana-oss
 ```
 
-> Ce fichier est disponible: [tig/docker-compose.yml](tig/docker-compose.yml).
+> This file is available at: [tig/docker-compose.yml](tig/docker-compose.yml).
 
-
-Ce fichier est construit en dépendance d'un fichier de contenance des variables d'environnement. Construisonsce fichier `.env` avec les valeurs de ces variables dans le même dossier.
+This file is built with a dependant to an file containing environment variables. We buld this file `.env` with the variable values in the same repository.
 
 ```yaml
 INFLUX_DB=telegraf
@@ -105,16 +104,16 @@ DOCKER_INFLUXDB_INIT_RETENTION=365d
 DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=telegraf_token
 ```
 
-> Ce fichier est disponible: [tig/.env](tig/.env).
+> This file is available at: [tig/.env](tig/.env).
 
-Nous allons maintenant configurer les paramètres de Telegraf. Dans le shell, exécutez la commane suivante.
+We now configure the parameters for Telegraf. In the bash shell, run the following lines:
 
 ```shell
 mkdir telegraf
 docker run --rm telegraf telegraf config > telegraf/telegraf.conf
 ```
 
-Cette commande nous a permi de créer un fichier de configuration par défaut de Telegraf, que nous alons alors modifier pour notre projet.
+This command created the default Telegraf configuration file, which we modify for our project.
 
 ```squidconf
 
@@ -204,101 +203,99 @@ Cette commande nous a permi de créer un fichier de configuration par défaut de
 [...]
 
 ```
-Effectuez alors les modifications suivantes :
-* Dans `[agent]`, la variable `hostname` comme la variable d'environnement `INFLUX_DB`, ici `"telegraf"`
+Apply these modifications :
+* In `[agent]`, the variable `hostname` with the value of the environment variable `INFLUX_DB`, here `"telegraf"`
 
-* Décommenter `[[outputs.influxdb_v2]]`, la variable `urls` comme `["http://influxdb:8086"]`, et les variables `token`, `organization` et `bucket` comme `DOCKER_INFLUXDB_INIT_ADMIN_TOKEN`, `DOCKER_INFLUXDB_INIT_ORG` et `DOCKER_INFLUXDB_INIT_BUCKET`, ici de valeur `"telegraf_token"`, `"telegraf_org"` et `"telegraf_bucket"`.
+* Uncomment `[[outputs.influxdb_v2]]`, set `urls` with `["http://influxdb:8086"]`, and set `token`, `organization` and `bucket` with the environment variables `DOCKER_INFLUXDB_INIT_ADMIN_TOKEN`, `DOCKER_INFLUXDB_INIT_ORG` and `DOCKER_INFLUXDB_INIT_BUCKET`, here `"telegraf_token"`, `"telegraf_org"` and `"telegraf_bucket"`.
 
-* Commenter `[[outputs.file]]`. Garder un fichier de sauvegarde au sein de Telegraf ne sera pas utile en complément de la base InfluxDB.
+* Comment `[[outputs.file]]`. We do not need any save file within Telegraf in with InfluxDB.
 
-* Décommenter `[[outputs.influxdb]]`, la variable `urls` comme `["http://influxdb:8086"]`, et les variables `username` et `password` comme `DOCKER_INFLUXDB_INIT_USERNAME` et `DOCKER_INFLUXDB_INIT_PASSWORD`, ici de valeur `"telegraf_user"` et `"telegraf_password"`.
+* Uncomment `[[outputs.influxdb]]`, set `urls` with `["http://influxdb:8086"]`, and set `username` and `password` with the environment variables `DOCKER_INFLUXDB_INIT_USERNAME` and `DOCKER_INFLUXDB_INIT_PASSWORD`, here `"telegraf_user"` and `"telegraf_password"`.
 
-* Décommenter `[[inputs.docker]]`, la variable `endpoint` comme `"unix:///var/run/docker.sock"`.
+* Uncomment `[[inputs.docker]]`, set `endpoint` with `"unix:///var/run/docker.sock"`.
 
-* Décommenter `[[inputs.procstat]]`, définir la variable `pattern` comme `".*"` pour récupérer les données de tous les processes, `fieldpass` comme les variables que l'on souhaite récupérer, ici `["cpu_time_system", "cpu_time_user", "cpu_usage", "memory_*", "num_threads", "*pid"]`, `pid_finder` comme `"native"` afin d'accéder aux données de l'hôte hors du container, et `pid_tag` comme `true` afin de conserver l'identifiant des processes,
+* Uncomment `[[inputs.procstat]]`, set `pattern` with `".*"` to fetch data from every process, set `fieldpass` with our variables of interest, here `["cpu_time_system", "cpu_time_user", "cpu_usage", "memory_*", "num_threads", "*pid"]`, set `pid_finder` with `"native"` to access host data from outside the container, and set `pid_tag` with `true` to conserve the processes' ids,
 
-* Décommenter `[[inputs.temp]]` pour obtenir les données de températures du CPU et de la NVME.
+* Uncomment `[[inputs.temp]]` to fetch the CPU and NVME temperature data.
 
-> Ce fichier est disponible: [tig/telegraf/telegraf.conf](tig/telegraf/telegraf.conf).
+> This file is available at: [tig/telegraf/telegraf.conf](tig/telegraf/telegraf.conf).
 
-Nous pouvons alors ensuite créer les conteneurs.
+We then can create the containers.
 
 ```shell
 docker compose up -d
 ```
 
-Vérifiez que les conteneurs ont bien été créés avec la commande suivante:
+Check that the containers have been created with the following command:
 
 ```shell
 docker ps
 ```
 
-Si nous avons bien créé les conteneurs, vous pouvons accéder à l'interface de Grafana sur le port choisi, ici `http://localhost:9090`.
+If the containers have been created, we can access the Grafana interface on the chosen port, here at `http://localhost:9090`.
 
-> Nous pouvons également accéder à l'interface de InfluxDB via le port configuré dans le fichier `docker-compose.yml`, ici à l'adresse `http://localhost:8086`.
+> We also can access the InfluxDB interface on the chosen port put within the `docker-compose.yml` file, here at `http://localhost:8086`.
 
-Nous pouvons alors passer à la configuration de Grafana.
+We can then configure Grafana.
 
-## Configuration de Grafana
+## Configuration of Grafana
 
-Sur la page d'accueil de Grafana, connectons nous avec l'identifiant et le mot de passe configuré dans le fichier `.env`. Dans notre exemple, nous avons `grafana_user` et `grafana_password`.
+On the Grafana welcoming page, connect using the user name and password used in the file `.env`. In this example, `grafana_user` and `grafana_password`.
 
-![Page d'accueil de Grafana](screenshots_config/grafana_welcome.png)
+![Grafana welcoming page](screenshots_config/grafana_welcome.png)
 
-Configurons la source des données dans l'onger Data source, et choisissons InfluxDB comme tyope de source.
+Configure the data source, and choose InfluxDB as source type.
 
-![Sélection de la source des données (InfluxDB)](screenshots_config/grafana_select_influx.png)
+![Select the dtaa source (InfluxDB)](screenshots_config/grafana_select_influx.png)
 
-Configurons maintenant la source des données avec le port de InfluxDB, et choisissons `FLUX` comme langage d'interrogation de la base.
+Configure the data source with the InfluxDB port, and select `FLUX` as the database interrogation language.
 
-![Sélection du nom et du port](screenshots_config/grafana_set_datasource1.png)
+![Slect name and port](screenshots_config/grafana_set_datasource1.png)
 
-Ajoutons ensuite les identifiants de connexion à la base de données avec ceux choisis dans le fichier `.env`.
+Add the database connection credentials with the ones from c.
 
 ![Sélection ajout des identifiant](screenshots_config/grafana_set_datasource2.png)
 
-Importons ensuite un dashboard de visualisation des données compatible avec nos configurations. Nous pouvons choisir un dashboard compatible en ligne, mais le dashboard correspondant à l'identifiant `15650` convient à notre exemple.
+Import a compatible visualization dashboard with our configuration. We can choose one online, but the one of id `15650` is well-suited for this example.
 
 ![Importation du dashboard](screenshots_config/grafana_import_dashb1.png)
 
-Choisissons la source que nous avons configuré avant d'importer.
+Choose the configured source before import.
 
 ![Sélection de la source](screenshots_config/grafana_import_dashb2.png)
 
-Enfin, choisissons les paramètres du dashboard correspondant à nos données, ici le nom du bucket que nous avons configuré.
+Fanally, choose the dashboard parameters for our data, here the bucket name we configured in the file `.env`.
 
 ![Sélection des paramètres](screenshots_config/grafana_import_dashb3.png)
 
-Nous pouvons ensuite modifier plus finement les affichages du dashboard selon nos objectifs, en modifiant leurs paramètres ou les queries associées (en respectant le langage d'écriture Flux).
+We then can modify our dashboard to our preferences, choosing different parameters or queries (in [FLUX](https://docs.influxdata.com/influxdb/cloud/query-data/get-started/query-influxdb/) language).
 
-Une autre possibilité pour importer un dashboard est d'importer le fichier associé au forma `.json`. Le fichier configuré que nous pouvons importer est disponible sur la: `grafana_dashboard_template_07052024.json`.
+Another possibility is to import the dashboard from a `.json` file. The configured file for this project is available at: [grafana_dashboard_template.json](grafana_dashboard_template.json).
 
-Le dashboard créé lors de notre projet est accessible sur [ce lien](http://localhost:9090/d/edh1jtjp0b4lcb/38860f63-1c6f-5143-a2a7-cfc431003966?orgId=1&from=1715083321958&to=1715084221958).
+## Interrogation of the database
 
-## Interrogation de la base
+To interrogate the **InfluxDB** database previously created, we use a bash script executing a python script as argument. We then interrogate the database to collect inserted data during the python script running time.
 
-Afin d'interrogée la base de données **InfluxDB** créée précédemment, nous utilisons un script bash exécute un fichier python présenté en argument, puis interroge la base de donnée afin de récolter les données enregistrée sur la période d'exécution du fichier python.
+> This file is available at: [get_metrics.sh](get_metrics.sh).
 
-> Ce fichier est disponible: [get_metrics.sh](get_metrics.sh).
-
-L'exécution de ce fichier est réalisée selon la commande suivante :
+This file is executed as follow:
 
 ```bash
 bash get_metrics.sh -f [python.file] (-p) (-P [pid])
 ```
-* le drapeau `-f` est obligatoire et précède le nom du fichier python à exécuter
-* le drapeau `-P` est facultatif : si renseigné, les données récoltées seront celles associées au process dont l'identifiant est disponible dans un fichier `python_process.pid` sur la période d'exécution du fichier python
-* le drapeau `-p` est facultatif : si renseigné, les données récoltées seront celles associées au process dont l'identifiant est renseigné comme argument dans la commande,
-* si les drapeaux `-p` et `-P` ne sont pas renseignés, l'ensemble des données de la base sur la période d'exécution du fichier python sera récoltée.
+* the flag `-f` is required and precedes the python file name to execute,
+* the flag `-P` is optional : if used, the collected data are the ones associated to the process with the id in the file `python_process.pid` during the python script running time,
+* the flag `-p` is optional : if used, the collected data are the ones associated to the process with the id follow ing the flag in the command,
+* if the flags `-p` and `-P` are not used, data for all processes are collected.
 
-Les données récoltées sont enregistrées dans un fichier `metrics_output`.
+The collected data are saved within a file `metrics_output`.
 
-Le fichier de récolte de donnée s'organise ainsi :
+The collecting file `get_metrics.sh` is organised as follow:
 
 ```bash
 #!/bin/bash
 
-#Récolte des arguments en entrée
+#Collecting input arguments
 while getopts 'f:p:P:' OPTION; do
   case "$OPTION" in
     f)
@@ -321,7 +318,7 @@ while getopts 'f:p:P:' OPTION; do
 done
 : ${name_file:?Missing -f}
 
-#Relevé du premier temps avant exécution du fichier python
+#Execution starting time
 t1=$(date -u +%Y-%m-%dT%T.%9NZ)
 echo "*************************************************"
 echo "Time start: $t1"
@@ -329,10 +326,10 @@ echo "*************************************************"
 echo "Running python script: $name_file"
 echo "*************************************************"
 
-#Exécution du fichier python
+#Execution of the chosen python script
 python3 $name_file
 
-#Relevé du second temps après exécution du fichier python
+#Execution ending time
 t2=$(date -u +%Y-%m-%dT%T.%9NZ)
 
 echo "*************************************************"
@@ -342,11 +339,11 @@ echo "*************************************************"
 
 if [ "$by_pid" = true ]; then
   if [ "$get_pid" = true ]; then
-    # Récolte du pid si non renseigné en entrée 
+    # Collecting process id if not within the input arguments 
     npid=$(cat python_process.pid)
   fi
   echo "Process ID: ${npid}"
-  # Construction de la query sur le process
+  # Building of the process query
   query="data=from(bucket: \"telegraf_bucket\")
     |> range(start: ${t1}, stop: ${t2})
     |> filter(fn: (r) => r[\"_measurement\"] == \"procstat\")
@@ -354,20 +351,20 @@ if [ "$by_pid" = true ]; then
     |> aggregateWindow(every: 1s, fn: mean, createEmpty: false)
     |> yield(name: \"mean\")"
 else
-  # Construction de la query sur l'ensemble des données
+  # Building of the whole data query
   query="data=from(bucket: \"telegraf_bucket\")
     |> range(start: ${t1}, stop: ${t2})
     |> aggregateWindow(every: 1s, fn: mean, createEmpty: false)
     |> yield(name: \"mean\")"
 fi
 
-# Ecriture de la query
+# Query writing
 echo $query > query
 
-# Copie de la query dans le conteneur d'InfluxDB
+# Copy of the query in the InfluxDB container
 sudo docker cp query influxdb:/query
 
-# Exécution de la query dans le conteneur, et enregistrement de la sortie dans metrics_output
+# Execution of the query in the container, and export of the output in metrics_output
 sudo docker exec -it influxdb sh -c 'influx query -f query -r' > metrics_output
 
 echo "*************************************************"
@@ -377,7 +374,7 @@ head metrics_output
 echo "*************************************************"
 ```
 
-Format de sortie dans `metrics_output` :
+Format of the output in `metrics_output` :
 
 ```text
 #group,false,false,true,true,false,false,true,true,true,true,true,true
@@ -397,9 +394,9 @@ Format de sortie dans `metrics_output` :
 [...]
 ```
 
-## Suivre les performances énergétiques
+## Tracking energy consumption
 
-Création du container Docker de l'application Home Assistant (dashboard spécifique optimisé pour Z-Wave): 
+Creating of the Docker container for the  Home Assistant application (specific dashboard optimized for Z-Wave): 
 
 ```bash
 sudo docker run -d \
@@ -413,7 +410,7 @@ sudo docker run -d \
   ghcr.io/home-assistant/home-assistant:stable
 ```
 
-Création du dossier contenant les configurations de Z-Wave: 
+Creation of the repository with Z-Wave configurations: 
 
 ```bash
 cd homeassistant
@@ -421,19 +418,19 @@ mkdir docker
 mkdir docker/zwave-js
 ```
 
-Récupération du nom du Network sur lequel a été installé telegraf :
+Fetching of the Network's name in with telegraf is installed:
 
 ```bash
 sudo docker inspect telegraf -f '{{range $k, $v := .NetworkSettings.Networks}}{{printf "%s\n" $k}}{{end}}'
 ```
 
-Récupération du nom du controleur USB :
+Fetching the USB controller's name :
 
 ```bash
 dmesg | grep tty
 ```
 
-Création du container Docker de l'application Z-Wave JS: 
+Creating of the Docker container for the Z-Wave JS application: 
 
 ```bash
 sudo docker run -d \
@@ -447,38 +444,38 @@ sudo docker run -d \
   -v ~/homeassistant/docker/zwave-js:/usr/src/app/store zwavejs/zwavejs2mqtt:latest
 ```
 
-Configuration de Z-Wave JS sur le port associé:
+Configuration of Z-Wave JS on the chosen port:
 
-Pour configurer l'application Z-Wave JS afin de collecter les données de la prise intelligente, rendons nous à l'adresse `http://localhost:8091` et dans l'onglet `Smart Start`.
+To configure Z-Wave JS to collect data from the connected plug, we access its interface in the page `Smart Start`, here at `http://localhost:8091`.
 
 ![Smart Start](smart-switch/smart-start.png)
 
-Ajoutons les informations de notre périphérique Smart Switch, via le bouton `Add`, et ajoutons le code DSK de la prise intelligente (indiqué sur l'emballage) et activons tous les systèmes de sécurité.
+Add the information from the Smart Switch device, using the `Add` button, and add the DSK code from the connected plug (written on the packaging) and enable all security systems.
 
 ![New entry](smart-switch/new-entry.png)
 
-Une fois la prise intelligente connectée, configurons les paramètres de l'application. Dans l'onglet `Settings`, et la partie `Z-Wave`, ajoutons le nom du contrôleur USB identifié précedemment avant la création des conteneurs Docker. 
+Once the plug added, configure the application's parameters. At the page `Settings`, at `Z-Wave`, add the previously identified USB controller name. 
 
-Vérifions que l'enregistrement des statistiques est activé.
+Check that statistics save is enabled.
 
 ![Enable statistics](smart-switch/enable-stats.png)
 
-Enfin, dans la partie Home Assistant, ajoutons l'adresse IP du conteneur Z-Wave comme hôte. Celle-ci peut être identifiée via la commande `docker sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' zwave-js` dans le terminal. Nous pouvons aussi modifier le port si nous le souhaitons.
+Finally, in `Home Assistant`, add the IP address of the Z-Wave container as host. This address can be found using the command `docker sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' zwave-js` in the shell. We can also modify the port to our preferences.
 
 ![Configure Home Assistant](smart-switch/config-homeassist.png)
 
-Maintenant que l'application Z-Wave JS est configurée, rendons nous à l'adresse `http://localhost:8123` pour configurer l'application Home Assistant. Commençopns par créer un compte en suivant la procédure guidée à l'écran.
-Une fois notre compte créé, ajoutons le périphérique d'intérêt.
+Now that Z-Wave JS is configured, we access the Home Assistant interface, here at `http://localhost:8123`. Start by creating an account by following the guide shown at this interface.
+Once the account created, add the device of interest.
 
-Dans l'onglet `Settings`, rendons-nous sur la page `Devices & services`.
+The the page `Settings`, go to `Devices & services`.
 ![Add device](smart-switch/add-device-ha.png)
 
-Ajoutons une intégration Z-Wave en nous rendant sur la fonction `Add integration` et en sélectionnant `Z-Wave`. Il nous faut alors renseigner l'adresse configurée dans les paramètres de Z-Wave JS sous la forme `ws://[IP du conteneur zwave-js]:[port configuré]`.
+Add a Z-Wave integration using `Add integration` and selecting `Z-Wave`. Add the address from the Z-Wave JS configuration in the format `ws://[IP of the zwave-js container]:[configured port]`.
 
-Séléctionnons notre périphérique Smart Switch 7, et nous avons alors bien ajouté notre périphérique. Nous pouvons alors observer les premières acquisitions de données de la prise intelligente, et créer un dashboard si nous le souhaitons.
+Select the Smart Switch 7 device, and it is now added. The first acquisitions from the plug are now visible, and we can now create a dashboard if we want.
 ![Get first data](smart-switch/first-data.png)
 
-### Connection à InfluxDB
+### Connection to InfluxDB
 
 ```sh
 pid_file /var/run/mosquitto.pid
@@ -605,21 +602,21 @@ client_trace = true
 #   #      key = type
 ```
 
-## Erreurs possibles
+## Possible errors
 
-Dans le cas d'un arrêt complet du serveur, les adresses IP des conteneurs Docker peuvent alors être changées. Ceci ne devrait pas poser de problème pour l'ensemble du pipeline, excepté pour le software HomeAssistant.
-Pour reconnecter HomeAssistant :
+When there is a complete server shutdown, the Docker containers' IP addresses might change. This should not be an issue for the pipeline except for Home Assistant.
+To reconnect HomeAssistant :
 
-  * Récupérer l'adresse IP du conteneur de ZWave-JS UI via la commande ```sudo docker inspect --format '{{ .NetworkSettings.Networks.tig_default.IPAddress }}' zwave-js```
+  * Get back the ZWave-JS UI container's IP address using the command: ```sudo docker inspect --format '{{ .NetworkSettings.Networks.tig_default.IPAddress }}' zwave-js```
 
-  * Réeffectuer la connection à HomeAssistant avec cette adresse IP comme présenté précédemment
+  * Reconnect HomeAssistant to the pipeline with this IP address following the previous steps.
 
-Dans le cas où la prise connectée s'est éteinte, et que l'intervalle d'envoi de données à été modifié :
+When there is a shutdown of the connected plug, the data collecting frequency might change. To choose the frequency:
 
-  * Se rendre sur l'interface de ZWave-JS UI `http://localhost:8091/` sur le panneau de contrôle (_Control panel_)
+  * Go to the ZWave-JS UI interface (here `http://localhost:8091/`) ont the `Control panel`,
 
-  * Sur le noeud associé à la prise connectée, dans l'onglet _Values_, ouvrir la rubrique _Configuration v1_
+  * On the node associated to the plug, in `Values`, go to `Configuration v1`,
 
-  * Modifier la valeur du paramètre _Automatic Reporting Interval_ (Attention, la valeur minimale est de 30 secondes)
+  * Set the `Automatic Reporting Interval` to your preference (**Warning**, the minimum value is 30 seconds).
 
 ![Pipeline final](smart-switch/pipeline.png)

@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_TELEGRAF_INFLUXDB",
-      "label": "telegraf_InfluxDB",
+      "name": "DS_INFLUXDB",
+      "label": "influxdb",
       "description": "",
       "type": "datasource",
       "pluginId": "influxdb",
@@ -11,6 +11,12 @@
   ],
   "__elements": {},
   "__requires": [
+    {
+      "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
     {
       "type": "panel",
       "id": "gauge",
@@ -102,7 +108,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -162,7 +168,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -180,7 +186,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"${bucket}\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r._measurement == \"cpu\" and  r.host == \"${host}\" and r._field == \"usage_idle\" and r.cpu == \"cpu-total\")\n    |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n    |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n    |> map(fn: (r) => ({r: r.usage_idle * -1.0 + 100.0}))",
+          "query": "from(bucket: \"${bucket}\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r._measurement == \"cpu\" and  r.host == \"${host}\" and r._field == \"usage_user\" and r.cpu == \"cpu-total\")\n    |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n    |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n    |> map(fn: (r) => ({r: r.usage_user}))",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -207,7 +213,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -267,7 +273,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -312,7 +318,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -367,7 +373,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -412,7 +418,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -424,7 +430,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-red",
+                "color": "text",
                 "value": null
               },
               {
@@ -439,7 +445,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 3,
+        "w": 2,
         "x": 8,
         "y": 1
       },
@@ -467,7 +473,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -512,7 +518,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -537,7 +543,7 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 11,
+        "x": 10,
         "y": 1
       },
       "id": 65104,
@@ -563,7 +569,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -608,7 +614,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -659,7 +665,7 @@
       "gridPos": {
         "h": 8,
         "w": 3,
-        "x": 14,
+        "x": 13,
         "y": 1
       },
       "id": 65105,
@@ -686,7 +692,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -731,7 +737,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -764,8 +770,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 7,
-        "x": 17,
+        "w": 4,
+        "x": 16,
         "y": 1
       },
       "id": 65086,
@@ -792,7 +798,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -837,7 +843,74 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 10
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 1
+      },
+      "id": 65114,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"topic\"] == \"zwave/Smart_switch_PC/50/0/value/65537\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> spread()\n  |> yield()",
+          "refId": "A"
+        }
+      ],
+      "title": "Energy consumption",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -897,7 +970,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -942,7 +1015,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1002,7 +1075,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -1047,7 +1120,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1107,7 +1180,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -1152,7 +1225,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1183,7 +1256,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
+        "w": 3,
         "x": 10,
         "y": 5
       },
@@ -1211,7 +1284,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -1256,7 +1329,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1288,8 +1361,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 7,
-        "x": 17,
+        "w": 4,
+        "x": 16,
         "y": 5
       },
       "id": 65085,
@@ -1316,7 +1389,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -1359,6 +1432,1101 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "eqCO2 emissions for electricity kWh in France in May 2024 : 0.1 kg\n(Reference : https://www.greenit.fr/2009/04/24/combien-de-co2-degage-un-1-kwh-electrique/#:~:text=En%20France%2C%20un%20kWh%20%C3%A9lectrique,CO2%20eq.%20%2F%20kWh%20%C3%A9l.)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#919191",
+                "value": null
+              },
+              {
+                "color": "#000000",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "masskg"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 5
+      },
+      "id": 65120,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "convertEnergy = (tables=<-) => tables\n    |> map(fn: (r) => ({r with _value: float(v: r._value) * float(v: 0.1)}))\n\nfrom(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"topic\"] == \"zwave/Smart_switch_PC/50/0/value/65537\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> spread()\n  |> convertEnergy()\n  |> yield(name: \"last\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Mass of emitted eqCO2",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 65109,
+      "panels": [],
+      "title": "Smart plug",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "semi-dark-red",
+                "value": 36000000
+              }
+            ]
+          },
+          "unit": "joule"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "A"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Measured"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "B"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Calculated"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 0,
+        "y": 10
+      },
+      "id": 65116,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "convertEnergy = (tables=<-) => tables\n    |> map(fn: (r) => ({r with _value: float(v: r._value) * float(v: 3600 * 1000)}))\n\nfrom(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"topic\"] == \"zwave/Smart_switch_PC/50/0/value/65537\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> spread()\n  |> convertEnergy()\n  |> yield(name: \"Measured energy consumed\")\n",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"topic\"] == \"zwave/Smart_switch_PC/50/0/value/66049\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> integral()\n  |> yield(name: \"Calculated energy consumed\")",
+          "refId": "B"
+        }
+      ],
+      "title": "Energy consumption",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "Price for electricity kWh with tax in France in May 2024 : €0.2516\n(Reference :  https://www.fournisseurs-electricite.com/contrat-electricite/prix)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "currencyEUR"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "A"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Measured"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "B"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Calculated"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 10
+      },
+      "id": 65118,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "convertEnergy = (tables=<-) => tables\n    |> map(fn: (r) => ({r with _value: float(v: r._value) * float(v: 0.2516)}))\n\nfrom(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"topic\"] == \"zwave/Smart_switch_PC/50/0/value/65537\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> spread()\n  |> convertEnergy()\n  |> yield(name: \"Measured energy consumed\")\n",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "convertEnergy = (tables=<-) => tables\n    |> map(fn: (r) => ({r with _value: float(v: r._value) * float(v: 0.2516) / float(v: 3600 * 1000)}))\n\nfrom(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"topic\"] == \"zwave/Smart_switch_PC/50/0/value/66049\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> integral()\n  |> convertEnergy()\n  |> yield(name: \"Calculated energy consumed\")",
+          "refId": "B"
+        }
+      ],
+      "title": "Energy consumption",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "eqCO2 emissions for electricity kWh in France in May 2024 : 0.1 kg\n(Reference : https://www.greenit.fr/2009/04/24/combien-de-co2-degage-un-1-kwh-electrique/#:~:text=En%20France%2C%20un%20kWh%20%C3%A9lectrique,CO2%20eq.%20%2F%20kWh%20%C3%A9l.)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#7c7c7c",
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#919191",
+                "value": null
+              },
+              {
+                "color": "#000000",
+                "value": 0.5
+              }
+            ]
+          },
+          "unit": "masskg"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "A"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Measured"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "B"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Calculated"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 10
+      },
+      "id": 65117,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "convertEnergy = (tables=<-) => tables\n    |> map(fn: (r) => ({r with _value: float(v: r._value) * float(v: 0.1)}))\n\nfrom(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"topic\"] == \"zwave/Smart_switch_PC/50/0/value/65537\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> spread()\n  |> convertEnergy()\n  |> yield(name: \"Measured energy consumed\")\n",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "convertEnergy = (tables=<-) => tables\n    |> map(fn: (r) => ({r with _value: float(v: r._value) * float(v: 0.1) / float(v: 3600*1000)}))\n\nfrom(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"topic\"] == \"zwave/Smart_switch_PC/50/0/value/66049\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> integral()\n  |> convertEnergy()\n  |> yield(name: \"Calculated energy consumed\")",
+          "refId": "B"
+        }
+      ],
+      "title": "Mass of emitted eqCO2 ",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "semi-dark-red",
+                "value": 10
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "A"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Measured"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "B"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Calculated"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 0,
+        "y": 14
+      },
+      "id": 65121,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"topic\"] == \"zwave/Smart_switch_PC/50/0/value/65537\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> spread()\n  |> yield(name: \"Measured energy consumed\")\n",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "convertEnergy = (tables=<-) => tables\n    |> map(fn: (r) => ({r with _value: float(v: r._value) / float(v: 3600 * 1000)}))\n    \nfrom(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"topic\"] == \"zwave/Smart_switch_PC/50/0/value/66049\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> integral()\n  |> convertEnergy()\n  |> yield(name: \"Calculated energy consumed\")",
+          "refId": "B"
+        }
+      ],
+      "title": "Energy consumption",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 25,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "id": 65110,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "right",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"topic\"] == \"zwave/Smart_switch_PC/50/0/value/65537\")\n  |> aggregateWindow(every: ${inter}, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Cumulated energy consumption (measured)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "id": 65119,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelMaxLength": 0,
+        "xTickLabelRotation": -45,
+        "xTickLabelSpacing": 100
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"topic\"] == \"zwave/Smart_switch_PC/50/0/value/65537\")\n  |> aggregateWindow(every: ${inter}, fn: max, createEmpty: false)\n  |> difference()\n  |> yield(name: \"mean\")\n  ",
+          "refId": "A"
+        }
+      ],
+      "title": "Energy consumption (measured)",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 100,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "value {host=\"telegraf\", topic=\"zwave/Smart_switch_PC/50/0/value/66049\"}"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 26
+      },
+      "id": 65122,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "last"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"topic\"] == \"zwave/Smart_switch_PC/50/0/value/66049\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Electric consumption",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 26
+      },
+      "id": 65112,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": -45,
+        "xTickLabelSpacing": 100
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "convertEnergy = (tables=<-) => tables\n    |> map(fn: (r) => ({r with _value: float(v: r._value)*float(v: uint(v: ${inter})) / float(v: 3600 * 1000 * 1000000000)}))\n\nfrom(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"topic\"] == \"zwave/Smart_switch_PC/50/0/value/66049\")\n  |> aggregateWindow(every: ${inter}, fn: mean, createEmpty: false)\n  |> convertEnergy()",
+          "refId": "A"
+        }
+      ],
+      "title": "Energy consumption (calculated)",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 100,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "volt"
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "value {host=\"telegraf\", topic=\"zwave/Smart_switch_PC/50/0/value/66561\"}"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 34
+      },
+      "id": 65113,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "last"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"topic\"] == \"zwave/Smart_switch_PC/50/0/value/66561\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Electric consumption",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 100,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "amp"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 34
+      },
+      "id": 65111,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "last"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"topic\"] == \"zwave/Smart_switch_PC/50/0/value/66817\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Electric consumption",
+      "type": "timeseries"
+    },
+    {
       "collapsed": false,
       "datasource": {
         "type": "influxdb",
@@ -1368,7 +2536,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 42
       },
       "id": 65060,
       "panels": [],
@@ -1387,7 +2555,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1427,13 +2595,11 @@
             }
           },
           "mappings": [],
-          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1473,7 +2639,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 10
+        "y": 43
       },
       "id": 12054,
       "interval": "$inter",
@@ -1500,7 +2666,7 @@
           "alias": "$tag_host: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -1524,7 +2690,7 @@
           "measurement": "mem_inactive",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "//SELECT mean(total) as total, mean(used) as used, mean(cached) as cached, mean(free) as free, mean(buffered) as buffered  FROM \"mem\" WHERE host =~ /$server$/ AND $timeFilter GROUP BY time($interval), host ORDER BY asc\n\n  from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r.host == \"${host}\")\n  |> filter(fn: (r) => r._measurement == \"mem\")\n  |> filter(fn: (r) => r._field == \"cached\" or r._field == \"free\" or r._field == \"buffered\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "query": "//SELECT mean(total) as total, mean(used) as used, mean(cached) as cached, mean(free) as free, mean(buffered) as buffered  FROM \"mem\" WHERE host =~ /$server$/ AND $timeFilter GROUP BY time($interval), host ORDER BY asc\n\n  from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r.host == \"${host}\")\n  |> filter(fn: (r) => r._measurement == \"mem\")\n  |> filter(fn: (r) => r._field == \"used\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1551,7 +2717,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1591,13 +2757,173 @@
             }
           },
           "mappings": [],
-          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/mem_total/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#BF1B00",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 43
+      },
+      "id": 65123,
+      "interval": "$inter",
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "alias": "$tag_host: $col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "function": "mean",
+          "groupBy": [
+            {
+              "interval": "auto",
+              "params": [
+                "auto"
+              ],
+              "type": "time"
+            },
+            {
+              "key": "host",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "mem_inactive",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "//SELECT mean(total) as total, mean(used) as used, mean(cached) as cached, mean(free) as free, mean(buffered) as buffered  FROM \"mem\" WHERE host =~ /$server$/ AND $timeFilter GROUP BY time($interval), host ORDER BY asc\n\n  from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r.host == \"${host}\")\n  |> filter(fn: (r) => r._measurement == \"mem\")\n  |> filter(fn: (r) => r._field == \"used_percent\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Memory usage",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1612,8 +2938,8 @@
       "gridPos": {
         "h": 9,
         "w": 12,
-        "x": 12,
-        "y": 10
+        "x": 0,
+        "y": 52
       },
       "id": 65092,
       "interval": "$inter",
@@ -1640,7 +2966,7 @@
           "alias": "$tag_host: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -1664,7 +2990,7 @@
           "measurement": "cpu_percentageBusy",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "//SELECT mean(usage_user) as \"user\", mean(usage_system) as \"system\", mean(usage_softirq) as \"softirq\", mean(usage_steal) as \"steal\", mean(usage_nice) as \"nice\", mean(usage_irq) as \"irq\", mean(usage_iowait) as \"iowait\", mean(usage_guest) as \"guest\", mean(usage_guest_nice) as \"guest_nice\"  FROM \"cpu\" WHERE \"host\" =~ /$server$/ and cpu = \"cpu-total\" AND $timeFilter GROUP BY time($interval), *\n\nfrom(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r.host == \"${host}\")\n  |> filter(fn: (r) => r._measurement == \"cpu\")\n  |> filter(fn: (r) => r._field == \"usage_system\" or r._field == \"usage_softirq\" or r._field == \"steal\" or r._field == \"usage_nice\" or r._field == \"usage_irq\"  or r._field == \"usage_iowait\"  or r._field == \"usage_guest\"  or r._field == \"guest_nice\")\n  |> filter(fn: (r) => r.cpu == \"cpu-total\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")\n  ",
+          "query": "//SELECT mean(usage_user) as \"user\", mean(usage_system) as \"system\", mean(usage_softirq) as \"softirq\", mean(usage_steal) as \"steal\", mean(usage_nice) as \"nice\", mean(usage_irq) as \"irq\", mean(usage_iowait) as \"iowait\", mean(usage_guest) as \"guest\", mean(usage_guest_nice) as \"guest_nice\"  FROM \"cpu\" WHERE \"host\" =~ /$server$/ and cpu = \"cpu-total\" AND $timeFilter GROUP BY time($interval), *\n\nfrom(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r.host == \"${host}\")\n  |> filter(fn: (r) => r._measurement == \"cpu\")\n  |> filter(fn: (r) => r._field == \"usage_user\")\n  |> filter(fn: (r) => r.cpu == \"cpu-total\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")\n  ",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -1691,145 +3017,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 0,
-        "y": 19
-      },
-      "id": 54694,
-      "interval": "$inter",
-      "options": {
-        "legend": {
-          "calcs": [
-            "mean",
-            "lastNotNull",
-            "max",
-            "min"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "8.1.0",
-      "targets": [
-        {
-          "alias": "$tag_host: $col",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
-          },
-          "dsType": "influxdb",
-          "function": "mean",
-          "groupBy": [
-            {
-              "interval": "auto",
-              "params": [
-                "auto"
-              ],
-              "type": "time"
-            },
-            {
-              "key": "host",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            }
-          ],
-          "measurement": "system_load1",
-          "policy": "default",
-          "query": "//SELECT mean(load1) as load1,mean(load5) as load5,mean(load15) as load15 FROM \"system\" WHERE host =~ /$server$/ AND $timeFilter GROUP BY time($interval), * ORDER BY asc\n\nfrom(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"system\")\n  |> filter(fn: (r) => r[\"_field\"] == \"load1\" or r[\"_field\"] == \"load5\" or r[\"_field\"] == \"load15\")\n  |> filter(fn: (r) => r.host == \"${host}\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        }
-      ],
-      "title": "CPU Load",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1873,8 +3061,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1887,10 +3074,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
+        "h": 9,
         "w": 12,
         "x": 12,
-        "y": 19
+        "y": 52
       },
       "id": 65089,
       "interval": "$inter",
@@ -1902,7 +3089,7 @@
             "max",
             "min"
           ],
-          "displayMode": "list",
+          "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
@@ -1917,7 +3104,7 @@
           "alias": "$tag_cpu",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -1941,7 +3128,7 @@
           "measurement": "cpu_percentageBusy",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "//SELECT 100 - mean(\"usage_idle\") FROM \"cpu\" WHERE (\"cpu\" =~ /cpu[0-9].*/ AND \"host\" =~ /^$server$/) AND $timeFilter GROUP BY time($interval), \"cpu\" fill(null)\n\nfrom(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"cpu\")\n  |> filter(fn: (r) => r[\"_field\"] == \"usage_idle\")\n  |> filter(fn: (r) => r[\"cpu\"] =~ /cpu[0-9].*/)\n  |> filter(fn: (r) => r.host == \"${host}\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({r with usage_idle: 100.0 - r.usage_idle}))",
+          "query": "//SELECT 100 - mean(\"usage_idle\") FROM \"cpu\" WHERE (\"cpu\" =~ /cpu[0-9].*/ AND \"host\" =~ /^$server$/) AND $timeFilter GROUP BY time($interval), \"cpu\" fill(null)\n\nfrom(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"cpu\")\n  |> filter(fn: (r) => r[\"_field\"] == \"usage_user\")\n  |> filter(fn: (r) => r[\"cpu\"] =~ /cpu[0-9].*/)\n  |> filter(fn: (r) => r.host == \"${host}\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({r with usage_idle: r.usage_user}))",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -1968,7 +3155,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2029,7 +3216,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 26
+        "y": 61
       },
       "id": 28239,
       "interval": "$inter",
@@ -2055,7 +3242,7 @@
           "alias": "$tag_host: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -2106,7 +3293,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2166,7 +3353,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 26
+        "y": 61
       },
       "id": 65097,
       "interval": "$inter",
@@ -2192,7 +3379,7 @@
           "alias": "$tag_host: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -2242,6 +3429,247 @@
     },
     {
       "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 69
+      },
+      "id": 65106,
+      "panels": [],
+      "title": "Temperature",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "temp {host=\"telegraf\", sensor=\"coretemp_package_id_0\"}"
+            },
+            "properties": [
+              {
+                "id": "custom.lineWidth",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "temp {host=\"telegraf\", sensor=\"coretemp_package_id_0\"}"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 70
+      },
+      "id": 65107,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"temp\")\n  |> filter(fn: (r) => r[\"sensor\"] == \"coretemp_package_id_0\" or r[\"sensor\"] == \"coretemp_core_5\" or r[\"sensor\"] == \"coretemp_core_4\" or r[\"sensor\"] == \"coretemp_core_3\" or r[\"sensor\"] == \"coretemp_core_2\" or r[\"sensor\"] == \"coretemp_core_1\" or r[\"sensor\"] == \"coretemp_core_0\")\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "CPU temperature",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 70
+      },
+      "id": 65108,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"temp\")\n  |> filter(fn: (r) => r[\"sensor\"] == \"nvme_composite\" or r[\"sensor\"] == \"nvme_sensor_1\")\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "NVME temperature",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
       "datasource": {
         "type": "influxdb",
         "uid": "adgq6zdu46fi8d"
@@ -2250,7 +3678,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 78
       },
       "id": 65096,
       "panels": [],
@@ -2269,7 +3697,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2354,7 +3782,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 35
+        "y": 79
       },
       "id": 52240,
       "interval": "$inter",
@@ -2381,7 +3809,7 @@
           "alias": "$tag_host: $tag_path : $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -2438,7 +3866,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2523,7 +3951,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 35
+        "y": 79
       },
       "id": 65090,
       "interval": "$inter",
@@ -2549,7 +3977,7 @@
           "alias": "$tag_path ($tag_fstype on $tag_device)",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -2606,7 +4034,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2708,7 +4136,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 43
+        "y": 87
       },
       "id": 33458,
       "interval": "$inter",
@@ -2735,7 +4163,7 @@
           "alias": "$tag_host: $tag_path : $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -2792,7 +4220,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2893,7 +4321,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 43
+        "y": 87
       },
       "id": 65098,
       "interval": "$inter",
@@ -2920,7 +4348,7 @@
           "alias": "$tag_host: $tag_path : $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -2977,7 +4405,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -3051,7 +4479,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 51
+        "y": 95
       },
       "id": 61850,
       "interval": "$inter",
@@ -3078,7 +4506,7 @@
           "alias": "$tag_host: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -3127,7 +4555,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -3212,7 +4640,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 51
+        "y": 95
       },
       "id": 65091,
       "interval": "$inter",
@@ -3238,7 +4666,7 @@
           "alias": "$tag_path ($tag_fstype on $tag_device)",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -3295,7 +4723,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -3355,7 +4783,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 59
+        "y": 103
       },
       "id": 13782,
       "interval": "$inter",
@@ -3382,7 +4810,7 @@
           "alias": "$tag_host: $tag_name: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -3436,7 +4864,7 @@
           "alias": "$tag_host: $tag_name: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -3493,7 +4921,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -3553,7 +4981,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 59
+        "y": 103
       },
       "id": 26024,
       "interval": "$inter",
@@ -3580,7 +5008,7 @@
           "alias": "$tag_host: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -3629,7 +5057,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -3689,7 +5117,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 67
+        "y": 111
       },
       "id": 60200,
       "interval": "$inter",
@@ -3716,7 +5144,7 @@
           "alias": "$tag_host: $tag_name: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -3770,7 +5198,7 @@
           "alias": "$tag_host: $tag_name: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -3827,7 +5255,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -3887,7 +5315,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 67
+        "y": 111
       },
       "id": 56720,
       "interval": "$inter",
@@ -3914,7 +5342,7 @@
           "alias": "$tag_host: $tag_name: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -3968,7 +5396,7 @@
           "alias": "$tag_host: $tag_name: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "mean",
@@ -4028,224 +5456,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 75
-      },
-      "id": 65106,
-      "panels": [],
-      "title": "Temperature",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "celsius"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "temp {host=\"telegraf\", sensor=\"coretemp_package_id_0\"}"
-            },
-            "properties": [
-              {
-                "id": "custom.lineWidth",
-                "value": 3
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 76
-      },
-      "id": 65107,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.4.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
-          },
-          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"temp\")\n  |> filter(fn: (r) => r[\"sensor\"] == \"coretemp_package_id_0\" or r[\"sensor\"] == \"coretemp_core_5\" or r[\"sensor\"] == \"coretemp_core_4\" or r[\"sensor\"] == \"coretemp_core_3\" or r[\"sensor\"] == \"coretemp_core_2\" or r[\"sensor\"] == \"coretemp_core_1\" or r[\"sensor\"] == \"coretemp_core_0\")\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
-          "refId": "A"
-        }
-      ],
-      "title": "CPU temperature",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "celsius"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 76
-      },
-      "id": 65108,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.4.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
-          },
-          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"temp\")\n  |> filter(fn: (r) => r[\"sensor\"] == \"nvme_composite\" or r[\"sensor\"] == \"nvme_sensor_1\")\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
-          "refId": "A"
-        }
-      ],
-      "title": "NVME temperature",
-      "type": "timeseries"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 84
+        "y": 119
       },
       "id": 65099,
       "panels": [],
@@ -4255,7 +5466,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "description": "for python processes",
       "fieldConfig": {
@@ -4316,7 +5527,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 85
+        "y": 120
       },
       "id": 65100,
       "options": {
@@ -4336,7 +5547,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"procstat\")\n  |> filter(fn: (r) => r[\"process_name\"] == \"${Process}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage\")\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
           "refId": "A"
@@ -4348,7 +5559,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "description": "for python processes",
       "fieldConfig": {
@@ -4409,7 +5620,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 85
+        "y": 120
       },
       "id": 65101,
       "options": {
@@ -4429,7 +5640,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"procstat\")\n  |> filter(fn: (r) => r[\"process_name\"] == \"${Process}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage\")\n  |> filter(fn: (r) => r[\"host\"] == \"${host}\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
           "refId": "A"
@@ -4448,7 +5659,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 93
+        "y": 128
       },
       "id": 65059,
       "panels": [],
@@ -4467,7 +5678,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -4527,7 +5738,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 94
+        "y": 129
       },
       "id": 42026,
       "interval": "$inter",
@@ -4554,7 +5765,7 @@
           "alias": "$tag_host: $tag_interface: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "derivative",
@@ -4608,7 +5819,7 @@
           "alias": "$tag_host: $tag_interface: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "derivative",
@@ -4665,7 +5876,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -4725,7 +5936,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 102
+        "y": 137
       },
       "id": 28572,
       "interval": "$inter",
@@ -4752,7 +5963,7 @@
           "alias": "$tag_host: $tag_interface: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "derivative",
@@ -4806,7 +6017,7 @@
           "alias": "$tag_host: $tag_interface: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "derivative",
@@ -4863,7 +6074,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -4923,7 +6134,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 110
+        "y": 145
       },
       "id": 65093,
       "interval": "$inter",
@@ -4949,7 +6160,7 @@
           "alias": "$tag_host: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "derivative",
@@ -5006,7 +6217,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -5066,7 +6277,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 117
+        "y": 152
       },
       "id": 65094,
       "interval": "$inter",
@@ -5092,7 +6303,7 @@
           "alias": "$tag_host: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "derivative",
@@ -5145,7 +6356,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -5186,7 +6397,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -5227,7 +6438,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -5272,7 +6483,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -5333,7 +6544,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 124
+        "y": 159
       },
       "id": 58901,
       "interval": "$inter",
@@ -5360,7 +6571,7 @@
           "alias": "$tag_host: $tag_interface: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "derivative",
@@ -5414,7 +6625,7 @@
           "alias": "$tag_host: $tag_interface: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "derivative",
@@ -5471,7 +6682,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_TELEGRAF_INFLUXDB}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -5532,7 +6743,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 124
+        "y": 159
       },
       "id": 50643,
       "interval": "$inter",
@@ -5559,7 +6770,7 @@
           "alias": "$tag_host: $tag_interface: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "derivative",
@@ -5613,7 +6824,7 @@
           "alias": "$tag_host: $tag_interface: $col",
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_TELEGRAF_INFLUXDB}"
+            "uid": "${DS_INFLUXDB}"
           },
           "dsType": "influxdb",
           "function": "derivative",
@@ -5673,7 +6884,8 @@
   "tags": [
     "telegraf",
     "influxdb",
-    "flux"
+    "flux",
+    "mqtt_consumer"
   ],
   "templating": {
     "list": [
@@ -5681,8 +6893,8 @@
         "allFormat": "glob",
         "current": {
           "selected": false,
-          "text": "telegraf_InfluxDB",
-          "value": "edh4qbg5qdm9sb"
+          "text": "influxdb",
+          "value": "edl0abwh9u1hca"
         },
         "datasource": "InfluxDB-telegraf",
         "hide": 0,
@@ -5702,7 +6914,7 @@
         "current": {},
         "datasource": {
           "type": "influxdb",
-          "uid": "${DS_TELEGRAF_INFLUXDB}"
+          "uid": "${DS_INFLUXDB}"
         },
         "definition": "buckets()",
         "hide": 0,
@@ -5721,7 +6933,7 @@
         "current": {},
         "datasource": {
           "type": "influxdb",
-          "uid": "${DS_TELEGRAF_INFLUXDB}"
+          "uid": "${DS_INFLUXDB}"
         },
         "definition": "import \"influxdata/influxdb/schema\"\n\nschema.tagValues(bucket: \"${bucket}\", tag: \"host\")",
         "hide": 0,
@@ -5746,8 +6958,8 @@
         "auto_min": "30s",
         "current": {
           "selected": false,
-          "text": "1s",
-          "value": "1s"
+          "text": "10s",
+          "value": "10s"
         },
         "hide": 0,
         "includeAll": false,
@@ -5761,7 +6973,7 @@
             "value": "$__auto_interval_inter"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "1s",
             "value": "1s"
           },
@@ -5771,7 +6983,7 @@
             "value": "5s"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "10s",
             "value": "10s"
           },
@@ -5923,7 +7135,7 @@
         "current": {},
         "datasource": {
           "type": "influxdb",
-          "uid": "${DS_TELEGRAF_INFLUXDB}"
+          "uid": "${DS_INFLUXDB}"
         },
         "definition": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"pid\")",
         "hide": 0,
@@ -5943,7 +7155,7 @@
         "current": {},
         "datasource": {
           "type": "influxdb",
-          "uid": "${DS_TELEGRAF_INFLUXDB}"
+          "uid": "${DS_INFLUXDB}"
         },
         "definition": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"process_name\")",
         "hide": 0,
@@ -5993,6 +7205,6 @@
   "timezone": "browser",
   "title": "Telegraf Metrics dashboard for InfluxDB 2.0 (Flux) - MV",
   "uid": "edh1jtjp0b4lcb",
-  "version": 2,
+  "version": 14,
   "weekStart": ""
 }
