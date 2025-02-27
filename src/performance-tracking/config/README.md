@@ -243,31 +243,31 @@ Nous pouvons alors passer à la configuration de Grafana.
 
 Sur la page d'accueil de Grafana, connectons nous avec l'identifiant et le mot de passe configuré dans le fichier `.env`. Dans notre exemple, nous avons `grafana_user` et `grafana_password`.
 
-[Page d'accueil de Grafana](screenshots_config/grafana_welcome.png)
+![Page d'accueil de Grafana](screenshots_config/grafana_welcome.png)
 
 Configurons la source des données dans l'onger Data source, et choisissons InfluxDB comme tyope de source.
 
-[Sélection de la source des données (InfluxDB)](screenshots_config/grafana_select_influx.png)
+![Sélection de la source des données (InfluxDB)](screenshots_config/grafana_select_influx.png)
 
 Configurons maintenant la source des données avec le port de InfluxDB, et choisissons `FLUX` comme langage d'interrogation de la base.
 
-[Sélection du nom et du port](screenshots_config/grafana_set_datasource1.png)
+![Sélection du nom et du port](screenshots_config/grafana_set_datasource1.png)
 
 Ajoutons ensuite les identifiants de connexion à la base de données avec ceux choisis dans le fichier `.env`.
 
-[Sélection ajout des identifiant](screenshots_config/grafana_set_datasource2.png)
+![Sélection ajout des identifiant](screenshots_config/grafana_set_datasource2.png)
 
 Importons ensuite un dashboard de visualisation des données compatible avec nos configurations. Nous pouvons choisir un dashboard compatible en ligne, mais le dashboard correspondant à l'identifiant `15650` convient à notre exemple.
 
-[Importation du dashboard](screenshots_config/grafana_import_dashb1.png)
+![Importation du dashboard](screenshots_config/grafana_import_dashb1.png)
 
 Choisissons la source que nous avons configuré avant d'importer.
 
-[Sélection de la source](screenshots_config/grafana_import_dashb2.png)
+![Sélection de la source](screenshots_config/grafana_import_dashb2.png)
 
 Enfin, choisissons les paramètres du dashboard correspondant à nos données, ici le nom du bucket que nous avons configuré.
 
-[Sélection des paramètres](screenshots_config/grafana_import_dashb3.png)
+![Sélection des paramètres](screenshots_config/grafana_import_dashb3.png)
 
 Nous pouvons ensuite modifier plus finement les affichages du dashboard selon nos objectifs, en modifiant leurs paramètres ou les queries associées (en respectant le langage d'écriture Flux).
 
@@ -451,32 +451,32 @@ Configuration de Z-Wave JS sur le port associé:
 
 Pour configurer l'application Z-Wave JS afin de collecter les données de la prise intelligente, rendons nous à l'adresse `http://localhost:8091` et dans l'onglet `Smart Start`.
 
-[Smart Start](smart-switch/smart-start.png)
+![Smart Start](smart-switch/smart-start.png)
 
 Ajoutons les informations de notre périphérique Smart Switch, via le bouton `Add`, et ajoutons le code DSK de la prise intelligente (indiqué sur l'emballage) et activons tous les systèmes de sécurité.
 
-[New entry](smart-switch/new-entry.png)
+![New entry](smart-switch/new-entry.png)
 
 Une fois la prise intelligente connectée, configurons les paramètres de l'application. Dans l'onglet `Settings`, et la partie `Z-Wave`, ajoutons le nom du contrôleur USB identifié précedemment avant la création des conteneurs Docker. 
 
 Vérifions que l'enregistrement des statistiques est activé.
 
-[Enable statistics](smart-switch/enable-stats.png)
+![Enable statistics](smart-switch/enable-stats.png)
 
 Enfin, dans la partie Home Assistant, ajoutons l'adresse IP du conteneur Z-Wave comme hôte. Celle-ci peut être identifiée via la commande `docker sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' zwave-js` dans le terminal. Nous pouvons aussi modifier le port si nous le souhaitons.
 
-[Configure Home Assistant](smart-switch/config-homeassist.png)
+![Configure Home Assistant](smart-switch/config-homeassist.png)
 
 Maintenant que l'application Z-Wave JS est configurée, rendons nous à l'adresse `http://localhost:8123` pour configurer l'application Home Assistant. Commençopns par créer un compte en suivant la procédure guidée à l'écran.
 Une fois notre compte créé, ajoutons le périphérique d'intérêt.
 
 Dans l'onglet `Settings`, rendons-nous sur la page `Devices & services`.
-[Add device](smart-switch/add-device-ha.png)
+![Add device](smart-switch/add-device-ha.png)
 
 Ajoutons une intégration Z-Wave en nous rendant sur la fonction `Add integration` et en sélectionnant `Z-Wave`. Il nous faut alors renseigner l'adresse configurée dans les paramètres de Z-Wave JS sous la forme `ws://[IP du conteneur zwave-js]:[port configuré]`.
 
 Séléctionnons notre périphérique Smart Switch 7, et nous avons alors bien ajouté notre périphérique. Nous pouvons alors observer les premières acquisitions de données de la prise intelligente, et créer un dashboard si nous le souhaitons.
-[Get first data](smart-switch/first-data.png)
+![Get first data](smart-switch/first-data.png)
 
 ### Connection à InfluxDB
 
@@ -622,4 +622,4 @@ Dans le cas où la prise connectée s'est éteinte, et que l'intervalle d'envoi 
 
   * Modifier la valeur du paramètre _Automatic Reporting Interval_ (Attention, la valeur minimale est de 30 secondes)
 
-[Pipeline final](smart-switch/pipeline.png)
+![Pipeline final](smart-switch/pipeline.png)
