@@ -431,7 +431,7 @@ Once the TIG pipeline configured, we will introduce the connected plug into it t
 
 Smart Switch 7 plug Aeotec &reg; |  Z Stick 7 controller Aeotec &reg;
 :-------------------------:|:-------------------------:
-![Smart Switch 7](smart-switch/smartswitch7.jpg)  |  ![Z Stick 7](smart-switch/zstick7.jpg)
+![Smart Switch 7](smart-switch/smartswitch7.jpg =100x)  |  ![Z Stick 7](smart-switch/zstick7.jpg =100x)
 
 Creating of the Docker container for the  Home Assistant application (specific dashboard optimized for Z-Wave): 
 
