@@ -1,4 +1,13 @@
+# -*- coding: utf-8 -*-
+#
 # Get statistics for each simulation parameter
+# Usage: python plot_usage.py --storage_path [STORAGE_PATH]
+#
+# Author: Matthieu Verlynde
+# Email: matthieu.verlynde@univ-smb.fr
+# Date: 25 Jun 2024
+# Version: 1.0.0
+
 import os
 import pandas as pd
 import plotly.express as px
@@ -47,5 +56,5 @@ if __name__ == "__main__":
 
     fig = plot_usage(results_path, i = 1, measurement='cpu', field='usage_idle', extra_measurement=False, title=f'CPU usage', xaxis_title='Time (s)', yaxis_title='CPU usage (%)', yaxis_range=[0,100])
 
-    fig.write_html(os.path.join(args.storage_path, "usage.png"), include_mathjax='cdn', include_plotlyjs='/home/verlyndem/Documents/cahier-labo-these/static/plotly.min.js')
+    fig.write_html(os.path.join(args.storage_path, "usage.png"), include_mathjax='cdn', include_plotlyjs='cdn')
     fig.show()

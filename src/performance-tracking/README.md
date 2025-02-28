@@ -86,3 +86,7 @@ This repository is used to track the performance and energy consumption of diffe
 ├── README.md
 └── simulation_metrics_exec.sh
 ```
+
+This repository presents each algorithms with their performance and energy consumption analysis in the folder [experiments](experiments).
+
+The data collection pipeline for hardware usage and energy consumption data is presented in the folder [config](config).
