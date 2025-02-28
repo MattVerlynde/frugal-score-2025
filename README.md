@@ -4,6 +4,8 @@ This repository contains the code associated to the paper [*Scoring Frugality fo
 
 > In remote sensing, the demand for extensive data processing algorithms continues to grow exponentially. Assessing the frugality of data processing algorithms has become a priority in the machine learning and artificial intelligence community. However, defining a quantifiable measure that combines performance and energy consumption remains a complex challenge. This paper introduces a methodology for collecting energy consumption data and presents three different frugality scoring methods. Through a case study of two classical data processing tasks in remote sensing, change detection and clustering, we demonstrate that these three scores capture different aspects of frugality. We further suggest a combined approach for users to achieve a more comprehensive assessment.
 
+This work rely on the submodule [performance-tracking](src/performance-tracking) containing scripts for each data processing algorithms along with a guide and configuration files for the data collection pipeline.
+
 **WORK IN PROGRESS**
 
 ## Repository structure
