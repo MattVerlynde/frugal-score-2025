@@ -52,6 +52,8 @@ This guide also presents the interrogation procedure of the **InfluxDB** databas
 The Telegraf plugin, produced by InfluxDB, allows the live collection of hardware usage data and their formatting. The ZWave-JS UI plugin collects data from a connected plug, and transfers them to Telegraf using the Mosquitto plugin.
 InfluxDB stores the data in time series format, and forms the interrogated database within the pipeline; Grafana is a visualisation data anlysis tool used with the InfluxDB database.
 
+![Pipeline final](smart-switch/pipeline.png)
+
 ## TIG configuration <a name="tig-config"></a>
 
 ### Installation <a name="tig-install"></a>
@@ -669,5 +671,3 @@ When there is a shutdown of the connected plug, the data collecting frequency mi
   * On the node associated to the plug, in `Values`, go to `Configuration v1`,
 
   * Set the `Automatic Reporting Interval` to your preference (**Warning**, the minimum value is 30 seconds).
-
-![Pipeline final](smart-switch/pipeline.png)
