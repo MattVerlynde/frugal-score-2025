@@ -32,17 +32,29 @@ This guide also presents the interrogation procedure of the **InfluxDB** databas
         └── telegraf.conf
 ```
 
+#### Table of Contents
+
+- [Pipeline presentation](#pipeline)
+- [TIG configuration](#tig-config)
+  - [Installation](#tig-install)
+  - [Configuration of Grafana](#grafana-config)
+  - [Interrogation of the database](#db-interro)
+- [Tracking energy consumption](#energy)
+  - [Plug installation](#plug-install)
+  - [Configuration to InfluxDB](#influx-connect)
+- [Possible errors](#errors)
+
 <!--more-->
 
-## Pipeline presentation
+## Pipeline presentation <a name="pipeline"></a>
 
 
 The Telegraf plugin, produced by InfluxDB, allows the live collection of hardware usage data and their formatting. The ZWave-JS UI plugin collects data from a connected plug, and transfers them to Telegraf using the Mosquitto plugin.
 InfluxDB stores the data in time series format, and forms the interrogated database within the pipeline; Grafana is a visualisation data anlysis tool used with the InfluxDB database.
 
-## TIG configuration
+## TIG configuration <a name="tig-config"></a>
 
-### Installation
+### Installation <a name="tig-install"></a>
 
 > This tutorial focuses on the pipeline installation using Docker, and depend on its previous installation.
 
@@ -269,7 +281,7 @@ If the containers have been created, we can access the Grafana interface on the 
 
 We can then configure Grafana.
 
-### Configuration of Grafana
+### Configuration of Grafana <a name="grafana-config"></a>
 
 On the Grafana welcoming page, connect using the user name and password used in the file `.env`. In this example, `grafana_user` and `grafana_password`.
 
@@ -303,7 +315,7 @@ We then can modify our dashboard to our preferences, choosing different paramete
 
 Another possibility is to import the dashboard from a `.json` file. The configured file for this project is available at: [grafana_dashboard_template.json](grafana_dashboard_template.json).
 
-### Interrogation of the database
+### Interrogation of the database <a name="db-interro"></a>
 
 To interrogate the **InfluxDB** database previously created, we use a bash script executing a python script as argument. We then interrogate the database to collect inserted data during the python script running time.
 
@@ -425,13 +437,15 @@ Format of the output in `metrics_output` :
 [...]
 ```
 
-## Tracking energy consumption
+## Tracking energy consumption <a name="energy"></a>
 
 Once the TIG pipeline configured, we will introduce the connected plug into it to collect energy consumption information.
 
 Smart Switch 7 plug Aeotec &reg; |  Z Stick 7 controller Aeotec &reg;
 :-------------------------:|:-------------------------:
 [<img src="smart-switch/smartswitch7.jpg" height="250"/>](smart-switch/smartswitch7.jpg)  |  [<img src="smart-switch/zstick7.jpg" height="250"/>](smart-switch/zstick7.jpg)
+
+### Plug installation <a name="plug-install"></a>
 
 Creating of the Docker container for the  Home Assistant application (specific dashboard optimized for Z-Wave): 
 
@@ -512,7 +526,7 @@ Add a Z-Wave integration using `Add integration` and selecting `Z-Wave`. Add the
 Select the Smart Switch 7 device, and it is now added. The first acquisitions from the plug are now visible, and we can now create a dashboard if we want.
 ![Get first data](smart-switch/first-data.png)
 
-### Connection to InfluxDB
+### Connection to InfluxDB <a name="influx-connect"></a>
 
 ```sh
 pid_file /var/run/mosquitto.pid
@@ -639,7 +653,7 @@ client_trace = true
 #   #      key = type
 ```
 
-## Possible errors
+## Possible errors <a name="errors"></a>
 
 When there is a complete server shutdown, the Docker containers' IP addresses might change. This should not be an issue for the pipeline except for Home Assistant.
 To reconnect HomeAssistant :
