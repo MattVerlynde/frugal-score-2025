@@ -3,6 +3,35 @@
 This page summaries the installation procedure for the reading, writieng, storing and visualizing pipeline for internal hardware usage data. This work is based on the **Telegraf-InfluxDB-Grafana** pipeline (TIG). It is largely inspired by the tutorial available online at [https://domopi.eu/tig-le-trio-telegraf-influxdb-grafana-pour-surveiller-vos-equipements/](https://domopi.eu/tig-le-trio-telegraf-influxdb-grafana-pour-surveiller-vos-equipements/).
 This guide also presents the interrogation procedure of the **InfluxDB** database after the execution of a python scriptusing a bash script.
 
+```bash
+.
+├── get_metrics.sh
+├── grafana_dashboard_template.json
+├── README.md
+├── screenshots_config
+│   ├── grafana_import_dashb1.png
+│   ├── grafana_import_dashb2.png
+│   ├── grafana_import_dashb3.png
+│   ├── grafana_select_influx.png
+│   ├── grafana_set_datasource1.png
+│   ├── grafana_set_datasource2.png
+│   └── grafana_welcome.png
+├── smart-switch
+│   ├── add-device-ha.png
+│   ├── config-homeassist.png
+│   ├── enable-stats.png
+│   ├── first-data.png
+│   ├── new-entry.png
+│   ├── pipeline.png
+│   └── smart-start.png
+│   ├── smartswitch7.jpg
+│   └── zstick7.jpg
+└── tig
+    ├── docker-compose.yml
+    └── telegraf
+        └── telegraf.conf
+```
+
 <!--more-->
 
 ## Pipeline presentation
@@ -11,7 +40,9 @@ This guide also presents the interrogation procedure of the **InfluxDB** databas
 The Telegraf plugin, produced by InfluxDB, allows the live collection of hardware usage data and their formatting. The ZWave-JS UI plugin collects data from a connected plug, and transfers them to Telegraf using the Mosquitto plugin.
 InfluxDB stores the data in time series format, and forms the interrogated database within the pipeline; Grafana is a visualisation data anlysis tool used with the InfluxDB database.
 
-## Installation
+## TIG configuration
+
+### Installation
 
 > This tutorial focuses on the pipeline installation using Docker, and depend on its previous installation.
 
@@ -238,7 +269,7 @@ If the containers have been created, we can access the Grafana interface on the 
 
 We can then configure Grafana.
 
-## Configuration of Grafana
+### Configuration of Grafana
 
 On the Grafana welcoming page, connect using the user name and password used in the file `.env`. In this example, `grafana_user` and `grafana_password`.
 
@@ -272,7 +303,7 @@ We then can modify our dashboard to our preferences, choosing different paramete
 
 Another possibility is to import the dashboard from a `.json` file. The configured file for this project is available at: [grafana_dashboard_template.json](grafana_dashboard_template.json).
 
-## Interrogation of the database
+### Interrogation of the database
 
 To interrogate the **InfluxDB** database previously created, we use a bash script executing a python script as argument. We then interrogate the database to collect inserted data during the python script running time.
 
@@ -395,6 +426,12 @@ Format of the output in `metrics_output` :
 ```
 
 ## Tracking energy consumption
+
+Once the TIG pipeline configured, we will introduce the connected plug into it to collect energy consumption information.
+
+Smart Switch 7 plug Aeotec &reg; |  Z Stick 7 controller Aeotec &reg;
+:-------------------------:|:-------------------------:
+![Smart Switch 7](smart-switch/smartswitch7.jpg)  |  ![Z Stick 7](smart-switch/zstick7.jpg)
 
 Creating of the Docker container for the  Home Assistant application (specific dashboard optimized for Z-Wave): 
 
