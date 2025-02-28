@@ -2,6 +2,10 @@
 
 This repository is used to track the performance and energy consumption of different algorithms in terms of hardware usage and inference time. These comparisons are made using data fetched on InfluxDB, a time-series database, and visualized on Grafana, a data visualization tool.  
 
+This repository presents each algorithms with their performance and energy consumption analysis in the folder [experiments](experiments).
+
+The data collection pipeline for hardware usage and energy consumption data is presented in the folder [config](config).
+
 ```bash
 .
 ├── config
@@ -86,7 +90,3 @@ This repository is used to track the performance and energy consumption of diffe
 ├── README.md
 └── simulation_metrics_exec.sh
 ```
-
-This repository presents each algorithms with their performance and energy consumption analysis in the folder [experiments](experiments).
-
-The data collection pipeline for hardware usage and energy consumption data is presented in the folder [config](config).
